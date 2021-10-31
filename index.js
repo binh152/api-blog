@@ -9,7 +9,7 @@ require("dotenv/config");
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
-app.use("/sinhvien", sinhvienRoter);
+app.use("/", sinhvienRoter);
 
 //connect db
 mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }, () => {

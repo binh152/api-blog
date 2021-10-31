@@ -1,14 +1,14 @@
 const router = require("express").Router();
 const model = require("../model/sinhvienModel");
 
-router.get("/", async (req, res) => {
+router.get("/sinhvien", async (req, res) => {
   try {
     const getSV = await model.find();
     res.json(getSV);
   } catch (error) {}
 });
 
-router.post("/", async (req, res) => {
+router.post("/sinhvien", async (req, res) => {
   const newSV = new model({
     hoten: req.body.hoten,
     ngaysinh: req.body.ngaysinh,
