@@ -17,6 +17,6 @@ mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }, () => {
 });
 
 //start server port
-app.listen(process.env.PORT || 3000, () => {
+app.listen(3000, () => {
   console.log("run server");
 });
