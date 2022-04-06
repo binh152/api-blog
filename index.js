@@ -10,7 +10,7 @@ app.use(cors());
 app.options('*', cors());
 app.use(bodyParser.json());
 app.use(express.json());
-app.use("/", Roter);
+app.use("/blog", Roter);
 
 app.use(function (req, res, next) {
 

@@ -1,14 +1,14 @@
 const router = require("express").Router();
 const model = require("../model/Model");
 
-router.get("/", async (req, res) => {
+router.get("/getALL", async (req, res) => {
   try {
     const getQA = await model.find();
     res.json(getQA);
   } catch (error) {}
 });
 
-router.post("/", async (req, res) => {
+router.post("/add", async (req, res) => {
   const newQA = new model({
     titleBlg: req.body.titleBlg,
     story: req.body.story,
