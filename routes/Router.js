@@ -3,31 +3,33 @@ const model = require("../model/Model");
 
 router.get("/getALL", async (req, res) => {
   try {
-    const getQA = await model.find();
-    res.json(getQA);
-  } catch (error) {}
+    const getAll = await model.find(req);
+    res.json(getAll);
+  } catch (error) {
+    res.json({ message: error })
+  }
 });
 
 router.post("/add", async (req, res) => {
-  const newQA = new model({
+  const newBlg = new model({
     titleBlg: req.body.titleBlg,
     story: req.body.story,
     image: req.body.image
   });
 
   try {
-    const saveQA = await newQA.save();
-    res.json(saveQA);
+    const saveBlg = await newBlg.save();
+    res.json(saveBlg);
   } catch (error) {
     res.json({ message: error });
   }
 });
 
-//tim theo ten
+//tim theo title
 router.get("/:titleBlg", async (req, res) => {
   try {
-    const getName = await model.findOne({ titleBlg: req.params.titleBlg });
-    res.json(getName);
+    const getTitle = await model.findOne({ titleBlg: req.params.titleBlg });
+    res.json(getTitle);
   } catch (error) {
     res.json({ message: error });
   }
@@ -37,8 +39,8 @@ router.get("/:titleBlg", async (req, res) => {
 //delete
 router.delete("/:id", async (req, res) => {
   try {
-    const removeQA = await model.remove({ _id: req.params.id });
-    res.json(removeQA);
+    const removeBlg = await model.remove({ _id: req.params.id });
+    res.json(removeBlg);
   } catch (error) {
     res.json({ message: error });
   }
@@ -47,7 +49,7 @@ router.delete("/:id", async (req, res) => {
 //update
 router.put("/:id", async (req, res) => {
   try {
-    const updateQA = await model.updateMany(
+    const updateBlg = await model.updateMany(
       { _id: req.params.id },
       {
         $set: {
@@ -57,7 +59,7 @@ router.put("/:id", async (req, res) => {
         },
       }
     );
-    res.json(updateQA);
+    res.json(updateBlg);
   } catch (error) {
     res.json({ message: error });
   }
