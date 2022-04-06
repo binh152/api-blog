@@ -24,6 +24,7 @@ app.use(function (req, res, next) {
 
 
 //connect db
+console.log("Database_URL", process.env.MONGO_DB);
 mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }, () => {
   console.log("connected");
 });
