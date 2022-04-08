@@ -25,11 +25,11 @@ router.post("/add", async (req, res) => {
   }
 });
 
-//tim theo title
-router.get("/:titleBlg", async (req, res) => {
+//tim theo id
+router.get("/:id", async (req, res) => {
   try {
-    const getTitle = await model.findOne({ titleBlg: req.params.titleBlg });
-    res.json(getTitle);
+    const getId = await model.findOne({ _id: req.params.id });
+    res.json(getId);
   } catch (error) {
     res.json({ message: error });
   }
