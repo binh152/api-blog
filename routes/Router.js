@@ -6,16 +6,13 @@ router.get("/getALL", async (req, res) => {
     const getAll = await model.find(req);
     res.json(getAll);
   } catch (error) {
-    res.json({ message: error })
+    res.json({ message: error });
   }
 });
 
 router.post("/add", async (req, res) => {
-  const newBlg = new model({
-    titleBlg: req.body.titleBlg,
-    story: req.body.story,
-    image: req.body.image
-  });
+  console.log(req.file);
+  const newBlg = new model(req.body);
 
   try {
     const saveBlg = await newBlg.save();
@@ -34,7 +31,6 @@ router.get("/:id", async (req, res) => {
     res.json({ message: error });
   }
 });
-
 
 //delete
 router.delete("/:id", async (req, res) => {
@@ -55,7 +51,7 @@ router.put("/:id", async (req, res) => {
         $set: {
           titleBlg: req.body.titleBlg,
           story: req.body.story,
-          image: req.body.image
+          image: req.body.image,
         },
       }
     );
