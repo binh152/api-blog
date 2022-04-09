@@ -60,6 +60,6 @@ app.post("/blog/upload", upload.single("file"), (req, res) => {
 
 
 //start server port
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log("run server");
 });
