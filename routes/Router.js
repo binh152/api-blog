@@ -9,7 +9,7 @@ router.get("/getALL", async (req, res) => {
     res.json({ message: error });
   }
 });
-// add
+
 router.post("/add", async (req, res) => {
   console.log(req.file);
   const newBlg = new model(req.body);
