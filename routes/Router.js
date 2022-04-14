@@ -12,8 +12,13 @@ router.get("/getALL", async (req, res) => {
 
 router.post("/add", async (req, res) => {
   console.log(req.file);
-  const newBlg = new model(req.body);
-
+  const newBlg = new model({
+    titleBlg:req.body.titleBlg,
+    story:req.body.story
+  });
+  if(req.file){
+    newBlg.photo = req.file.path
+  }
   try {
     const saveBlg = await newBlg.save();
     res.json(saveBlg);

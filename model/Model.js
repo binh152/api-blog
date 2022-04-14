@@ -4,7 +4,7 @@ const blogSchema = new mongoose.Schema(
   {
     titleBlg: {
       type: String,
-      required: true,
+      required: false,
     },
     story: {
       type: String,
