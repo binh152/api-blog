@@ -66,7 +66,7 @@ const upload = multer({
     fileSize: 1024 * 1024 * 2,
   },
 });
-app.post("/blog/upload", upload.single("file"), (req, res) => {
+app.post("/blog/upload", upload.single("photo"), (req, res) => {
   res.status(200).json("File has been uploaded");
 });
 
