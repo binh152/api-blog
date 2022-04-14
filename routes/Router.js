@@ -1,5 +1,32 @@
 const router = require("express").Router();
 const model = require("../model/Model");
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './images/');
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter
+});
 
 router.get("/getALL", async (req, res) => {
   try {
@@ -10,9 +37,13 @@ router.get("/getALL", async (req, res) => {
   }
 });
 
-router.post("/add", async (req, res) => {
+router.post("/add", upload.single('photo'),async (req, res) => {
   console.log(req.file);
-  const newBlg = new model(req.body);
+  const newBlg = new model({
+    titleBlg:req.body.titleBlg,
+    story:req.body.story,
+    photo:req.file.path
+  });
 
   try {
     const saveBlg = await newBlg.save();
