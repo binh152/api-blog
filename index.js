@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Roter = require("./routes/Router");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-// const upload = require("./middleware/upload");
+const upload = require("./middleware/upload");
 
 // app.use(bodyParser.json({ limit: "50mb" }));
 // app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
@@ -42,9 +42,9 @@ mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }, () => {
   console.log("connected");
 });
 
-// app.post("/blog/store", upload.single("photo"), (req, res) => {
-//   res.status(200).json("File has been uploaded");
-// });
+app.post("/blog/store", upload.single("photo"), (req, res) => {
+  res.status(200).json("File has been uploaded");
+});
 
 //start server port
 app.listen(process.env.PORT || 5000, () => {
