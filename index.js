@@ -4,22 +4,18 @@ const mongoose = require("mongoose");
 const Roter = require("./routes/Router");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const upload = require("./middleware/upload");
-
-// app.use(bodyParser.json({ limit: "50mb" }));
-// app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-
-// app.use(express.json());
-// app.use("/images", express.static(path.join(__dirname, "/images")));
+const multer = require("multer");
+const path = require("path");
 
 require("dotenv/config");
+app.use("/images", express.static(path.join(__dirname, "/images")));
 
 app.use(cors());
 app.options("*", cors());
 app.use(bodyParser.json());
 app.use(express.json());
 app.use("/blog", Roter);
-app.use('/images',express.static('images'))
+app.use("/images", express.static("images"));
 
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -38,11 +34,30 @@ app.use(function (req, res, next) {
 });
 
 //connect db
-mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }, () => {
-  console.log("connected");
+mongoose.connect(
+  process.env.MONGO_DB,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: true,
+  },
+  () => {
+    console.log("connected");
+  }
+);
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
 });
 
-app.post("/blog/store", upload.single("photo"), (req, res) => {
+const upload = multer({ storage: storage });
+app.post("/blog/upload", upload.single("file"), (req, res) => {
   res.status(200).json("File has been uploaded");
 });
 
