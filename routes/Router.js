@@ -13,6 +13,7 @@ router.get("/getALL", async (req, res) => {
 router.post("/add", async (req, res) => {
   console.log(req.file);
   const newBlg = new model(req.body);
+
   try {
     const saveBlg = await newBlg.save();
     res.json(saveBlg);
@@ -24,7 +25,7 @@ router.post("/add", async (req, res) => {
 //tim theo id
 router.get("/:id", async (req, res) => {
   try {
-    const getId = await model.findById({ _id: req.params.id });
+    const getId = await model.findOne({ _id: req.params.id });
     res.json(getId);
   } catch (error) {
     res.json({ message: error });
@@ -47,7 +48,11 @@ router.put("/:id", async (req, res) => {
     const updateBlg = await model.updateMany(
       { _id: req.params.id },
       {
-        $set: req.body
+        $set: {
+          titleBlg: req.body.titleBlg,
+          story: req.body.story,
+          image: req.body.image,
+        },
       }
     );
     res.json(updateBlg);
