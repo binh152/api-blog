@@ -4,8 +4,6 @@ const mongoose = require("mongoose");
 const Roter = require("./routes/Router");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const multer = require("multer");
-const path = require("path");
 
 app.use(express.json());
 
@@ -16,7 +14,7 @@ app.options("*", cors());
 app.use(bodyParser.json());
 app.use(express.json());
 app.use("/blog", Roter);
-app.use("/images",express.static('images'))
+app.use("/images", express.static("images"));
 
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -28,6 +26,7 @@ app.use(function (req, res, next) {
     "Access-Control-Allow-Headers",
     "application/json",
     "text/plain",
+    "Content-Type",
     "*/*"
   );
   res.setHeader("Access-Control-Allow-Credentials", true);
