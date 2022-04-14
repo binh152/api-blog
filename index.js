@@ -53,18 +53,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({
-  storage: storage,
-  fileFilter: function (req, file, cb) {
-    if (file.mimetype == "image/png" || file.mimetype == "image/jpeg") {
-      cb(null, true);
-    } else {
-      console.log("not support");
-      cb(null, false);
-    }
-  },
-  limits: {
-    fileSize: 1024 * 1024 * 2,
-  },
+  storage: storage
 });
 app.post("/blog/upload", upload.single("photo"), (req, res) => {
   res.status(200).json("File has been uploaded");
