@@ -6,9 +6,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
-         
-app.use(bodyParser.json({limit:'50mb'})); 
-app.use(bodyParser.urlencoded({extended:true, limit:'50mb'})); 
 
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "/images")));
@@ -20,7 +17,6 @@ app.options("*", cors());
 app.use(bodyParser.json());
 app.use(express.json());
 app.use("/blog", Roter);
-
 
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -54,10 +50,9 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-app.post("/blog/upload", upload.single("file"), (req, res) => {
+app.post("/blog/upload", upload.single("photo"), (req, res) => {
   res.status(200).json("File has been uploaded");
 });
-
 
 //start server port
 app.listen(process.env.PORT || 5000, () => {
