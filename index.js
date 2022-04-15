@@ -9,9 +9,22 @@ const path = require("path");
 
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "/images")));
+// upload file
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.filename);
+  },
+});
+
+const upload = multer({ storage: storage });
+app.post("/blog/upload", upload.single("photo"), (req, res) => {
+  res.status(200).json("File has been uploaded");
+});
 
 require("dotenv/config");
-
 app.use(cors());
 app.options("*", cors());
 app.use(bodyParser.json());
@@ -37,21 +50,6 @@ app.use(function (req, res, next) {
 //connect db
 mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }, () => {
   console.log("connected");
-});
-
-// upload file
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-
-const upload = multer({ storage: storage });
-app.post("/blog/upload", upload.single("photo"), (req, res) => {
-  res.status(200).json("File has been uploaded");
 });
 
 //start server port
