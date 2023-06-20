@@ -54,5 +54,5 @@ mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true }, () => {
 
 //start server port
 app.listen(process.env.PORT || 5000, () => {
-  console.log("run server");
+  console.log("run server :http://localhost:5000/blog/getAll");
 });
